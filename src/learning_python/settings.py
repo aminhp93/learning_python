@@ -39,13 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party
+    'crispy_forms',
     'rest_framework',
 
     # app
+    'accounts',
     'books',
     'comments',
     'posts',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,6 +128,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = "/accounts/login/"
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -151,3 +159,31 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 
+AUTH_USER_MODEL = 'accounts.MyUser'
+
+SECRET_KEY = "test123"
+
+SECURITY_PASSWORD_SALT = "test321"
+
+# gmail settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'minhpn.org.ec@gmail.com' 
+EMAIL_HOST_PASSWORD = 'miamikki521'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+#sendgrid settings
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'yourusername@youremail.com'
+# EMAIL_HOST_PASSWORD = 'your password'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+
+# DEFAULT_FROM_EMAIL = 'minhpn.org.ec@gmail.com>'
+# ADMINS = (
+#     ('You', 'you@email.com'),
+# )
+
+# MANAGERS = ADMINS

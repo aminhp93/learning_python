@@ -20,11 +20,11 @@ from django.contrib import admin
 
 from .views import Home, Contact
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^books/', include('books.urls', namespace='books')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
