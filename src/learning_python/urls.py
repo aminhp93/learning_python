@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
     url(r'^books/', include('books.urls', namespace='books')),
+    url(r'^comments/', include('comments.urls', namespace='comments')),
+    url(r'^posts/', include('posts.urls', namespace='posts')),
     url(r'^api/books/', include('books.api.urls', namespace='books-api')),
 ]
 

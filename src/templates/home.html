@@ -3,11 +3,22 @@
  | Home
 {% endblock %}
 {% block content %}
-Home Page
-<ol>
-	<li>Create Book Model</li>
-	<li>Crud Book</li>
-	<li>Admin</li>
-	<li>API Book Model</li>
-</ol>
+<h1>Tasks List</h1>
+http://www.pwc.com/vn/hackaday2017
+
+Reverse engineering (Reserve software, unpack…)
+Web (Analyse and exploit vulnerabilities on web services and program logic: SQL injection, XSS, Seasion Hijacking...).
+Pwnable (Exploit software).
+MISC (Forensic, ACM, Recon,…)
+
+{% for task in task_list %}
+<div class="form-group ">
+    <div class="col-md-5">
+        <div class="checkbox">
+            <input type="checkbox" name="packersOff" value="1"/>
+             <label class="strikethrough">{{ task }}</label>
+        </div>
+     </div>
+</div>
+{% endfor  %}
 {% endblock %}

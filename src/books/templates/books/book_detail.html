@@ -6,5 +6,7 @@
 <h1>Book Detail</h1>
 <div>Title: {{ object.title }}</div>
 <div>Review: {{ object.review }}</div>
-
+<div>Comments {% for comment in object.comments.all %}
+	<li>{{ comment }}</li>
+{% endfor %}</div>
 {% endblock %}

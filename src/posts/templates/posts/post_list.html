@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %} | Post List {% endblock %} {% block content %} Post list {{ post_list }}
+<a href="{% url 'posts:create' %}" class="btn btn-success">Add a New Post</a>
+<br/><br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Post Title</th>
+            <th>Review</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in post_list %}
+        <tr>
+            <th scope="row">{{ post.id }}</th>
+            <td> {{ post.title }}
+            </td>
+            <td>{{ post.review }}</td>
+            <td><a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a> <a href="{% url 'books:update' slug=post.slug %}" class="btn btn-warning">Update</a> <a href="{% url 'books:delete' slug=post.slug %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

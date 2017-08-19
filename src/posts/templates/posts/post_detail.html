@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+ | Post Detail
+{% endblock %}
+{% block content %}
+<h1>Post Detail</h1>
+<div>Title: {{ object.title }}</div>
+<div>Content: {{ object.content }}</div>
+<div>Draft: {{ object.draft }}</div>
+<div>Publish: {{ object.publish }}</div>
+<div>Draft: {{ object.draft }}</div>
+<div>Language: {{ object.language }}</div>
+<div>Comments: {% for comment in object.comments.all %}
+	<li>{{ comment }}</li>
+	{% endfor %}
+</div>
+
+{% endblock %}

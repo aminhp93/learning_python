@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %} | Comment List {% endblock %} {% block content %} Comment list {{ comment_list }}
+<a href="{% url 'comments:create' %}" class="btn btn-success">Add a New Comment</a>
+<br/><br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Comment Content</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comment_list %}
+        <tr>
+            <th scope="row">{{ comment.id }}</th>
+            </td>
+            <td>{{ comment.content }}</td>
+            <td><a href="{{ comment.get_absolute_url }}" class="btn btn-info">View</a> <a href="{% url 'comments:update' id=comment.id %}" class="btn btn-warning">Update</a> <a href="{% url 'comments:delete' id=comment.id %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
