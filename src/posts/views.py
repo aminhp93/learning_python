@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
+		FormView,
 		ListView,
 		DetailView,
 		CreateView,
@@ -10,6 +11,7 @@ from django.views.generic import (
 
 
 from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 class PostListView(ListView):
@@ -19,9 +21,18 @@ class PostListView(ListView):
 		context = super().get_context_data(**kwargs)
 		return context
 
-class PostCreateView(CreateView):
+class PostCreateView(FormView):
+	template_name = 'posts/post_form.html'
 	model = Post
-	fields = ['title', 'content', 'publish', 'language']
+	form_class = PostForm
+	success_url = reverse_lazy("posts:list")
+	# fields = ['title', 'content', 'publish', 'language']
+
+	def form_valid(self, form):
+		print(self.request.POST)
+		form.save()
+		return super().form_valid(form)
+
 
 class PostDetailView(DetailView):
 	model = Post

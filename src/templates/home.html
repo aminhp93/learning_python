@@ -3,7 +3,9 @@
  | Home
 {% endblock %}
 {% block content %}
-<h1>Tasks List</h1>
+{% if user.is_authenticated %}
+<h1>Hello, {{ user.first_name }}</h1>
+{% endif %}
 http://www.pwc.com/vn/hackaday2017
 
 Reverse engineering (Reserve software, unpack…)

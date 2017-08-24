@@ -8,7 +8,8 @@ class Home(View):
 		"Crud Book", "Admin", "API Book Model",\
 		"account user: send mail", "post app (Viblo)",\
  		"project app (video content tutorial) ", "Regex",\
-		"Multi language", "Docker, pusher, notification"
+		"Multi language", "Docker, pusher, notification",\
+		"Markdown - Comment", "Tag App"
 		]}
 		return render(request, template, context)
 

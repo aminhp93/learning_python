@@ -17,7 +17,7 @@
             <td> {{ post.title }}
             </td>
             <td>{{ post.review }}</td>
-            <td><a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a> <a href="{% url 'books:update' slug=post.slug %}" class="btn btn-warning">Update</a> <a href="{% url 'books:delete' slug=post.slug %}" class="btn btn-danger">Delete</a></td>
+            <td><a href="{{ post.get_absolute_url }}" class="btn btn-info">View</a> <a href="{% url 'posts:update' slug=post.slug %}" class="btn btn-warning">Update</a> <a href="{% url 'posts:delete' slug=post.slug %}" class="btn btn-danger">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -7,6 +7,17 @@
 <div>Title: {{ object.title }}</div>
 <div>Review: {{ object.review }}</div>
 <div>Comments {% for comment in object.comments.all %}
+	{% if not comment.parent %}
 	<li>{{ comment }}</li>
+		{% for reply in object.comments.all %}
+		<ul>
+		{% if reply.parent_id == comment.id %}
+			<li>{{ reply }}</li>
+		{% endif %}
+		</ul>
+		{% endfor %}
+	{% endif %}
+	
+
 {% endfor %}</div>
 {% endblock %}

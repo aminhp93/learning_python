@@ -7,7 +7,6 @@ from learning_python.utils import create_slug
 
 from comments.models import Comment
 
-
 # Create your models here.
 class Post(models.Model):
 

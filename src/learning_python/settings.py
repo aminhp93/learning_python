@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party
+
     'crispy_forms',
+    'pagedown',
     'rest_framework',
 
     # app
@@ -151,7 +153,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),    
+    # '/var/www/static/',
+]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 
@@ -167,8 +171,8 @@ SECURITY_PASSWORD_SALT = "test321"
 
 # gmail settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'minhpn.org.ec@gmail.com' 
-EMAIL_HOST_PASSWORD = 'miamikki521'
+EMAIL_HOST_USER = 'test29051993@gmail.com' 
+EMAIL_HOST_PASSWORD = 'Minh1234'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -187,3 +191,4 @@ EMAIL_USE_TLS = True
 # )
 
 # MANAGERS = ADMINS
+

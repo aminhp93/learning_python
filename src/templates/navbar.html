@@ -20,7 +20,7 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% if request.user.is_authenticated %}{% if request.user.first_name %} {{ user.first_name }} {% else %} {{ request.user.email }}{% endif %}{% else %}Account {% endif %}</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                     {% if request.user.is_authenticated %}
                     <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
