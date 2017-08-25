@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.signals import pre_save
@@ -9,6 +11,7 @@ from comments.models import Comment
 
 # Create your models here.
 class Book(models.Model):
+	user 		= models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
 	title 		= models.CharField(max_length=120)
 	review		= models.TextField()
 	slug 		= models.SlugField(unique=True)
@@ -21,6 +24,12 @@ class Book(models.Model):
 
 	def get_absolute_url(self):
 		return reverse("books:detail", kwargs={"slug": self.slug})
+
+	@property
+	def get_content_type(self):
+		instance = self
+		content_type = ContentType.objects.get_for_model(instance.__class__)
+		return content_type
 
 def pre_save_book_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:

@@ -1,23 +1,25 @@
-{% extends 'base.html' %}
-{% block title %}
- | Book Detail
-{% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %} | Book Detail {% endblock %} {% block content %}
 <h1>Book Detail</h1>
 <div>Title: {{ object.title }}</div>
 <div>Review: {{ object.review }}</div>
-<div>Comments {% for comment in object.comments.all %}
-	{% if not comment.parent %}
-	<li>{{ comment }}</li>
-		{% for reply in object.comments.all %}
-		<ul>
-		{% if reply.parent_id == comment.id %}
-			<li>{{ reply }}</li>
-		{% endif %}
-		</ul>
-		{% endfor %}
-	{% endif %}
-	
+<div>Comments {% for comment in object.comments.all %} {% if not comment.parent %}
+    <li>{{ comment }}</li>
 
-{% endfor %}</div>
-{% endblock %}
+    {% for reply in object.comments.all %}
+    <ul>
+        {% if reply.parent_id == comment.id %}
+        <li>{{ reply }}</li>
+        {% endif %}
+    </ul>
+    {% endfor %}
+    <form action="" method="POST" class="col-sm-6">
+    	{% csrf_token %}
+    	{{ form|crispy }}
+    	<input type="submit" value="Reply" class="btn btn-default">
+    </form>
+     {% endif %} {% endfor %}</div>
+{% if request.user.is_authenticated %}
+<form method="POST" action="."> {% csrf_token %} {{ form|crispy }}
+    <input type='submit' value='Comment' class='btn btn-primary'>
+</form>
+{% endif %} {% endblock %}

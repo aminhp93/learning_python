@@ -18,9 +18,14 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from .views import Home, Contact
+from .views import Home, Contact, RootAPIView
+
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 urlpatterns = [
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-refresh/', refresh_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
     url(r'^admin/', admin.site.urls),
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
@@ -28,7 +33,10 @@ urlpatterns = [
     url(r'^books/', include('books.urls', namespace='books')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
+
+    url(r'^api/$', RootAPIView.as_view(), name='root-api'),
     url(r'^api/books/', include('books.api.urls', namespace='books-api')),
+    url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),
 ]
 
 if settings.DEBUG:
