@@ -23,9 +23,7 @@ from .views import Home, Contact, RootAPIView
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 urlpatterns = [
-    url(r'^api-token-auth/', obtain_jwt_token),
-    url(r'^api-token-refresh/', refresh_jwt_token),
-    url(r'^api-token-verify/', verify_jwt_token),
+  
     url(r'^admin/', admin.site.urls),
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
@@ -33,12 +31,22 @@ urlpatterns = [
     url(r'^books/', include('books.urls', namespace='books')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
-
+    # =========================== API ====================================
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-refresh/', refresh_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
     url(r'^api/$', RootAPIView.as_view(), name='root-api'),
     url(r'^api/books/', include('books.api.urls', namespace='books-api')),
     url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),
 ]
 
+
+handler400 = 'learning_python.views.error400'
+handler403 = 'learning_python.views.error403'
+handler404 = 'learning_python.views.error404'
+handler500 = 'learning_python.views.error500'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

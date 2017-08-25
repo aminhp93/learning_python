@@ -43,17 +43,35 @@ class BookListAPIView(ListAPIView):
 		queryset_list = Book.objects.all()
 		return queryset_list
 
-	def list(self, request, *args, **kwargs):
-		queryset = self.filter_queryset(self.get_queryset())
+	def dispatch(self, request, *args, **kwargs):
+		"""
+		`.dispatch()` is pretty much the same as Django's regular dispatch,
+		but with extra hooks for startup, finalize, and exception handling.
+		"""
+		self.args = args
+		self.kwargs = kwargs
+		request = self.initialize_request(request, *args, **kwargs)
+		self.request = request
+		self.headers = self.default_response_headers  # deprecate?
 
-		page = self.paginate_queryset(queryset)
-		if page is not None:
-			serializer = self.get_serializer(page, many=True)
-			return self.get_paginated_response(serializer.data)
+		try:
+			self.initial(request, *args, **kwargs)
 
-		serializer = self.get_serializer(queryset, many=True)
+			# Get the appropriate handler method
+			if request.method.lower() in self.http_method_names:
+				handler = getattr(self, request.method.lower(),
+								  self.http_method_not_allowed)
+			else:
+				handler = self.http_method_not_allowed
 
-		return Response(serializer.data)
+			response = handler(request, *args, **kwargs)
+
+		except Exception as exc:
+			response = self.handle_exception(exc)
+
+		self.response = self.finalize_response(request, response, *args, **kwargs)
+		response.data['status_code'] = response.status_code
+		return response
 
 class BookCreateAPIView(CreateAPIView):
 	serializer_class = BookCreateUpdateSerializer
@@ -66,6 +84,36 @@ class BookDetailAPIView(RetrieveAPIView):
 		queryset_list = Book.objects.all()
 		return queryset_list
 
+	def dispatch(self, request, *args, **kwargs):
+		"""
+		`.dispatch()` is pretty much the same as Django's regular dispatch,
+		but with extra hooks for startup, finalize, and exception handling.
+		"""
+		self.args = args
+		self.kwargs = kwargs
+		request = self.initialize_request(request, *args, **kwargs)
+		self.request = request
+		self.headers = self.default_response_headers  # deprecate?
+
+		try:
+			self.initial(request, *args, **kwargs)
+
+			# Get the appropriate handler method
+			if request.method.lower() in self.http_method_names:
+				handler = getattr(self, request.method.lower(),
+								  self.http_method_not_allowed)
+			else:
+				handler = self.http_method_not_allowed
+
+			response = handler(request, *args, **kwargs)
+
+		except Exception as exc:
+			response = self.handle_exception(exc)
+
+		self.response = self.finalize_response(request, response, *args, **kwargs)
+		response.data['status_code'] = response.status_code
+		return response
+
 class BookUpdateAPIView(RetrieveUpdateAPIView):
 	serializer_class = BookCreateUpdateSerializer
 	queryset = Book.objects.all()
@@ -75,8 +123,4 @@ class BookDeleteAPIView(DestroyAPIView):
 	serializer_class = BookDetailSerializer
 	queryset = Book.objects.all()
 	lookup_field = "slug"
-
-
-
-
 
