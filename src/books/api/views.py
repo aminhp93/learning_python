@@ -70,7 +70,7 @@ class BookListAPIView(ListAPIView):
 			response = self.handle_exception(exc)
 
 		self.response = self.finalize_response(request, response, *args, **kwargs)
-		response.data['status_code'] = response.status_code
+		response.data['results'][-1] = {'status': response.status_code}
 		return response
 
 class BookCreateAPIView(CreateAPIView):
