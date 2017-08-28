@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),
 ]
 
+# Django Resframework Authentication
+urlpatterns +=  url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 
 handler400 = 'learning_python.views.error400'
 handler403 = 'learning_python.views.error403'

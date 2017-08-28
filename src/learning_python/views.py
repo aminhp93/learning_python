@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import HyperlinkedIdentityField
 from rest_framework.views import exception_handler
 from rest_framework.views import APIView
+from rest_framework.reverse import reverse
 from rest_framework.exceptions import (
 		APIException, 
 		NotFound, 
@@ -37,13 +38,14 @@ class Contact(View):
 
 class RootAPIView(APIView):
 	def get(self, request, format=None):
-		book_api_url = "http://localhost:8000/api/books/"
-		comment_api_url = "http://localhost:8000/api/comments/"
-		return Response({"books": book_api_url, "comments": comment_api_url, "status":status.HTTP_201_CREATED})
+		return Response({
+				"books": reverse('books-api:list', request=request, format=format), 
+				"comments": reverse('comments-api:list', request=request, format=format),
+			})
+
 
 @api_view()
 def error400(request):
-	# raise APIException(detail="error", code='404')
 	raise ParseError('Bad request')
 
 @api_view()

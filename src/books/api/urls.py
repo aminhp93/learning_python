@@ -1,17 +1,11 @@
 from django.conf.urls import url
 
-from .views import (
-		BookListAPIView,
-		BookCreateAPIView,
-		BookDetailAPIView,
-		BookUpdateAPIView,
-		BookDeleteAPIView,
-	)
+from books.api import views
 
 urlpatterns = [
-	url(r'^$', BookListAPIView.as_view(), name='list'),
-	url(r'^create/$', BookCreateAPIView.as_view(), name='create'),
-	url(r'^(?P<slug>[\w-]+)/$', BookDetailAPIView.as_view(), name='detail'),
-	url(r'^(?P<slug>[\w-]+)/update/$', BookUpdateAPIView.as_view(), name='update'),
-	url(r'^(?P<slug>[\w-]+)/delete/$', BookDeleteAPIView.as_view(), name='delete'),
+	url(r'^$', views.BookListAPIView.as_view(), name='list'),
+	url(r'^create/$', views.BookCreateAPIView.as_view(), name='create'),
+	url(r'^(?P<slug>[\w-]+)/$', views.BookDetailAPIView.as_view(), name='detail'),
+	url(r'^(?P<slug>[\w-]+)/update/$', views.BookUpdateAPIView.as_view(), name='update'),
+	url(r'^(?P<slug>[\w-]+)/delete/$', views.BookDeleteAPIView.as_view(), name='delete'),
 ]
