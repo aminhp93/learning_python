@@ -168,8 +168,8 @@ SECURITY_PASSWORD_SALT = "test321"
 
 # gmail settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'test29051993@gmail.com' 
-EMAIL_HOST_PASSWORD = 'Minh1234'
+EMAIL_HOST_USER = 'minhpn.org.ec@gmail.com'
+EMAIL_HOST_PASSWORD = 'miamikki521'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
