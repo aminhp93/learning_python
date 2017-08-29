@@ -18,7 +18,7 @@ class PostListView(ListView):
 	model = Post
 
 	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
+		context = super(PostListView, self).get_context_data(**kwargs)
 		return context
 
 class PostCreateView(FormView):
@@ -31,14 +31,14 @@ class PostCreateView(FormView):
 	def form_valid(self, form):
 		print(self.request.POST)
 		form.save()
-		return super().form_valid(form)
+		return super(PostListView, self).form_valid(form)
 
 
 class PostDetailView(DetailView):
 	model = Post
 
 	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
+		context = super(PostListView, self).get_context_data(**kwargs)
 		print(dir(context['object']))
 		return context
 

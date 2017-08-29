@@ -45,8 +45,8 @@ class BookListAPIView(ListAPIView):
 		return queryset_list
 
 	def finalize_response(self, request, response, *args, **kwargs):
-		response.data['results'][-1] = {'status': response.status_code}
-		return super().finalize_response(request, response, *args, **kwargs)
+		response.data['status_code'] = response.status_code
+		return super(BookListAPIView, self).finalize_response(request, response, *args, **kwargs)
 
 class BookCreateAPIView(CreateAPIView):
 	serializer_class = BookCreateUpdateSerializer
@@ -62,7 +62,7 @@ class BookDetailAPIView(RetrieveAPIView):
 
 	def finalize_response(self, request, response, *args, **kwargs):
 		response.data['status_code'] = response.status_code
-		return super().finalize_response(request, response, *args, **kwargs)
+		return super(BookDetailAPIView, self).finalize_response(request, response, *args, **kwargs)
 
 class BookUpdateAPIView(RetrieveUpdateAPIView):
 	serializer_class = BookCreateUpdateSerializer

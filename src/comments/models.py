@@ -7,13 +7,13 @@ from django.urls import reverse
 # Create your models here.
 class CommentManager(models.Manager):
 	def all(self):
-		qs = super().filter(parent=None)
+		qs = super(CommentManager, self).filter(parent=None)
 		return qs
 
 	def filter_by_instance(self, instance):
 		content_type = ContentType.objects.get_for_model(instance.__class__)
 		object_id = instance.id
-		qs = super().filter(content_type=content_type, object_id = object_id).filter(parent=None)
+		qs = super(CommentManager, self).filter(content_type=content_type, object_id = object_id).filter(parent=None)
 		return qs
 
 

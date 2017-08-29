@@ -17,8 +17,8 @@ class CommentListAPIView(ListAPIView):
 		return queryset_list
 
 	def finalize_response(self, request, response, *args, **kwargs):
-		response.data['results'][-1] = {'status': response.status_code}
-		return super().finalize_response(request, response, *args, **kwargs)
+		response.data['status_code'] = response.status_code
+		return super(CommentListAPIView, self).finalize_response(request, response, *args, **kwargs)
 
 class CommentDetailAPIView(RetrieveAPIView):
 	serializer_class = CommentDetailSerializer
@@ -26,7 +26,7 @@ class CommentDetailAPIView(RetrieveAPIView):
 
 	def finalize_response(self, request, response, *args, **kwargs):
 		response.data['status_code'] = response.status_code
-		return super().finalize_response(request, response, *args, **kwargs)
+		return super(CommentListAPIView, self).finalize_response(request, response, *args, **kwargs)
 
 	def get_queryset(self):
 		queryset_list = Comment.objects.filter(id__gte=0)
