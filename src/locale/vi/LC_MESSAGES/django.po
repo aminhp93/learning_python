@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-27 16:35+0000\n"
+"POT-Creation-Date: 2017-08-29 03:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: learning_python/settings.py:150
-msgid "Việt Nam"
-msgstr ""
-
-#: learning_python/settings.py:151
+#: learning_python/settings.py:140
 msgid "English"
 msgstr ""
 
-#: learning_python/views.py:69
-msgid "Hello wolrd"
+#: learning_python/settings.py:141
+msgid "Japanese"
 msgstr ""
 
-#: templates/translate.html:5
-msgid "Welcome to TaskBuster!"
+#: learning_python/settings.py:142
+msgid "Vietnamese"
 msgstr ""
 
-#: templates/translate.html:6
-msgid ""
-"TaskBuster is a simple Task manager that helps you organize your daylife. </"
-"br> You can create todo lists, periodic tasks and more! </br></br> If you "
-"want to learn how it was created, or create it yourself!, check www.django-"
-"tutorial.com"
-msgstr ""
+#: templates/contact.html:7
+msgid "Welcome to my site"
+msgstr "Chào mừng bạn đến với trang web của tôi"

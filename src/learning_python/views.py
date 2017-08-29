@@ -43,7 +43,6 @@ class RootAPIView(APIView):
 				"comments": reverse('comments-api:list', request=request, format=format),
 			})
 
-
 @api_view()
 def error400(request):
 	raise ParseError('Bad request')
@@ -59,3 +58,6 @@ def error404(request):
 @api_view()
 def error500(request):
 	raise APIException(detail='Server error')
+
+def translate(request):
+	return render(request, 'contact.html', {})
