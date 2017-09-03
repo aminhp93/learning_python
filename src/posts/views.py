@@ -29,23 +29,28 @@ class PostCreateView(FormView):
 	# fields = ['title', 'content', 'publish', 'language']
 
 	def form_valid(self, form):
-		print(self.request.POST)
 		form.save()
-		return super(PostListView, self).form_valid(form)
+		return super(PostCreateView, self).form_valid(form)
 
 
 class PostDetailView(DetailView):
 	model = Post
 
 	def get_context_data(self, **kwargs):
-		context = super(PostListView, self).get_context_data(**kwargs)
+		context = super(PostDetailView, self).get_context_data(**kwargs)
 		print(dir(context['object']))
 		return context
 
 class PostUpdateView(UpdateView):
+	template_name = 'posts/post_form.html'
 	model = Post
-	fields = ['title', 'content', 'language']
-	template_name_suffix = '_update_form'
+	form_class = PostForm
+	success_url = reverse_lazy("posts:list")
+
+	def form_valid(self, form):
+		form.save()
+		return super(PostUpdateView, self).form_valid(form)
+
 
 class PostDeleteView(DeleteView):
 	model = Post

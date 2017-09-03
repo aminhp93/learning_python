@@ -14,7 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^(&2eky(w(=r5y%^zvn5b2r)=jf@hs-r2)53aduauc*ynrw#44'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["54.201.154.130", "localhost"]
 
@@ -28,22 +28,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # third party
 
+    # third party
     'crispy_forms',
-    # 'oauth2_provider',
     'pagedown',
     'rest_framework',
+    'rest_framework_swagger',
 
     # app
     'accounts',
-    'books',
     'comments',
     'posts',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,36 +74,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learning_python.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_1',
+        'NAME': 'learning_python',
         'USER': 'root',
         'PASSWORD': 'Miamikki521',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
-
-# [client]
-# database = 'db_1';;
-# user = 'amin';
-# password = 'Miamikki521';
-# default-character-set = utf8
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -168,8 +146,8 @@ SECURITY_PASSWORD_SALT = "test321"
 
 # gmail settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'minhpn.org.ec@gmail.com'
-EMAIL_HOST_PASSWORD = 'miamikki521'
+EMAIL_HOST_USER = 'test29051993@gmail.com'
+EMAIL_HOST_PASSWORD = 'Minh1234'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -182,26 +160,10 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_TLS = True
 
 
-# DEFAULT_FROM_EMAIL = 'minhpn.org.ec@gmail.com>'
-# ADMINS = (
-#     ('You', 'you@email.com'),
-# )
-
-# MANAGERS = ADMINS
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_RENDERER_CLASSES': (
-#         'rest_framework.renderers.JSONRenderer',
-#         'rest_framework.renderers.BrowsableAPIRenderer',
-#         ),
-#     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-#     # 'PAGE_SIZE': 1
-# }
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -212,8 +174,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'books.utils.customer_exception_handler',
-
+    'EXCEPTION_HANDLER': 'learning_python.utils.customer_exception_handler',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 1
 }
 
 

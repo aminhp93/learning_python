@@ -18,6 +18,11 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
+
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
+
 from .views import Home, Contact, RootAPIView, translate
 
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
@@ -28,7 +33,6 @@ urlpatterns = [
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact/$', Contact.as_view(), name='contact'),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
-    url(r'^books/', include('books.urls', namespace='books')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
     # =========================== API ====================================
@@ -36,8 +40,10 @@ urlpatterns = [
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^api/$', RootAPIView.as_view(), name='root-api'),
-    url(r'^api/books/', include('books.api.urls', namespace='books-api')),
-    url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),   
+    url(r'^api/posts/', include('posts.api.urls', namespace='posts-api')),
+    url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),  
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^swagger/$', schema_view), 
 ]
 
 urlpatterns += i18n_patterns(
@@ -45,7 +51,7 @@ urlpatterns += i18n_patterns(
 )
 
 # Django Resframework Authentication
-urlpatterns +=  url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 
 
 handler400 = 'learning_python.views.error400'

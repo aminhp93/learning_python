@@ -4,22 +4,8 @@ from pagedown.widgets import PagedownWidget
 
 from .models import Post
 
-from codemirror import CodeMirrorTextarea
-
-codemirror_widget = CodeMirrorTextarea(
-	mode="python",
-	theme="cobalt",
-	config={
-		'fixedGutter': True
-	},
-)
-# document = forms.TextField(widget=codemirror_widget)
-
-
 class PostForm(forms.ModelForm):
-	# content = forms.CharField(widget=codemirror_widget)
-
-	content = forms.CharField(widget=PagedownWidget(show_preview=False))
+	# content = forms.CharField(widget=PagedownWidget(show_preview=False, template='posts/pagedown.html'))
 	publish = forms.DateField(widget=forms.SelectDateWidget)
 	class Meta:
 		model = Post
@@ -28,4 +14,9 @@ class PostForm(forms.ModelForm):
 			"content",
 			"draft",
 			"publish",
+			"image",
 		]
+
+		def clean_content(request, obj):
+			print('clean contnet')
+			print(request, obj)

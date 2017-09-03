@@ -28,13 +28,11 @@ Instructions:
 
 Next Step:
 
-1. account user: send mail
-2. post app (Viblo)
 
-	model 
-3. project app (video content tutorial) 
+- Pagedown
 
-4. Regex
+- Codemirror
+
 5. Multi language
 6. Docker, pusher, notification
 

@@ -15,8 +15,8 @@ from rest_framework.exceptions import (
 		PermissionDenied
 	)
 
-from books.api.serializers import BookListSerializer
-from books.models import Book
+from posts.api.serializers import PostListSerializer
+from posts.models import Post
 
 class Home(View):
 	def get(self, request, *args, **kwargs):
@@ -39,7 +39,7 @@ class Contact(View):
 class RootAPIView(APIView):
 	def get(self, request, format=None):
 		return Response({
-				"books": reverse('books-api:list', request=request, format=format), 
+				"posts": reverse('posts-api:list', request=request, format=format), 
 				"comments": reverse('comments-api:list', request=request, format=format),
 			})
 

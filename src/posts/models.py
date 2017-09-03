@@ -1,35 +1,52 @@
+from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.signals import pre_save
 from django.urls import reverse
 
-from learning_python.utils import create_slug
+from learning_python.utils import create_slug, get_read_time
 
 from comments.models import Comment
 
 # Create your models here.
+class PostManager(models.Manager):
+	def active(self, *args, **kwargs):
+		return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
+
+
+def upload_location(instance, filename):
+	# PostModel = instance.__class__
+
+	# new_id = PostModel.objects.order_by('id').last().id + 1
+   
+	# return "%s/%s" %(new_id, filename)
+	return filename
+
 class Post(models.Model):
-
-	LANGUAGE_CHOICES = (
-			("English", "English"),
-			("Vietnamese", "Vietnamese"),
-			("Japanese", "Japanese")
-		)
-
+	user 		= models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
 	title 		= models.CharField(max_length=120)
 	slug 		= models.SlugField(unique=True)
 	content		= models.TextField()
 	draft		= models.BooleanField(default=False)
-	publish		= models.DateTimeField(auto_now=False, auto_now_add=False)
-	read_time	= models.IntegerField(default=0)
-	language	= models.CharField(
-								max_length=120,
-								choices=LANGUAGE_CHOICES,
-								default="English"
+	publish		= models.DateField(auto_now=False, auto_now_add=False)
+	image		= models.ImageField(
+								upload_to=upload_location,
+								null=True,
+								blank=True,
+								width_field='width_field',
+								height_field='height_field'
 							)
+	width_field = models.IntegerField(default=0)
+	height_field= models.IntegerField(default=0)
+	read_time	= models.IntegerField(default=0)
 	comments 	= GenericRelation(Comment)
 	updated		= models.DateTimeField(auto_now=True)
 	timestamp	= models.DateTimeField(auto_now_add=True)
+
+	objects = PostManager()
+
+	class Meta:
+		ordering = ["-timestamp", "-updated"]
 
 	def __str__(self):
 		return self.title
@@ -37,8 +54,30 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return reverse("posts:detail", kwargs={"slug": self.slug})
 
+    # def get_markdown(self):
+    #     content = self.content
+    #     markdown_text = markdown(content)
+    #     return mark_safe(markdown_text)
+
+	@property
+	def comments(self):
+		instance = self
+		qs = Comment.objects.filter_by_instance(instance)
+		return qs
+
+	@property
+	def get_content_type(self):
+		instance = self
+		content_type = ContentType.objects.get_for_model(instance.__class__)
+		return content_type
+
 def pre_save_book_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
+
+	# if instance.content:
+	# 	html_string = instance.get_markdown()
+	# 	read_time_var = get_read_time(html_string)
+	# 	instance.read_time = read_time_var
 
 pre_save.connect(pre_save_book_receiver, sender=Post)

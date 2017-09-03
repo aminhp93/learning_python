@@ -4,13 +4,13 @@ from rest_framework.generics import (
 		RetrieveAPIView
 	)
 
-from books.api.pagination import BookPageNumberPagination
+from posts.api.pagination import PostPageNumberPagination
 from comments.models import Comment
 from .serializers import CommentListSerializer, CommentDetailSerializer
 
 class CommentListAPIView(ListAPIView):
 	serializer_class = CommentListSerializer
-	pagination_class = BookPageNumberPagination
+	pagination_class = PostPageNumberPagination
 
 	def get_queryset(self):
 		queryset_list = Comment.objects.all()
@@ -22,7 +22,7 @@ class CommentListAPIView(ListAPIView):
 
 class CommentDetailAPIView(RetrieveAPIView):
 	serializer_class = CommentDetailSerializer
-	pagination_class = BookPageNumberPagination
+	pagination_class = PostPageNumberPagination
 
 	def finalize_response(self, request, response, *args, **kwargs):
 		response.data['status_code'] = response.status_code
