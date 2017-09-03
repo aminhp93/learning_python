@@ -3,6 +3,8 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.signals import pre_save
 from django.urls import reverse
+from django.contrib.contenttypes.models import ContentType
+
 
 from learning_python.utils import create_slug, get_read_time
 

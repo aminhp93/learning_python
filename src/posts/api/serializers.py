@@ -2,7 +2,7 @@ from rest_framework.serializers import (
 	HyperlinkedIdentityField,
 	ModelSerializer,
 	SerializerMethodField
-	)
+)
 
 from rest_framework import serializers
 

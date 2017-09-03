@@ -39,6 +39,7 @@ class Contact(View):
 class RootAPIView(APIView):
 	def get(self, request, format=None):
 		return Response({
+				"users": reverse('users-api:list', request=request, format=format),
 				"posts": reverse('posts-api:list', request=request, format=format), 
 				"comments": reverse('comments-api:list', request=request, format=format),
 			})

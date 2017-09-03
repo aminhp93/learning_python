@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^api/$', RootAPIView.as_view(), name='root-api'),
+    url(r'^api/users/', include('accounts.api.urls', namespace='users-api')),
     url(r'^api/posts/', include('posts.api.urls', namespace='posts-api')),
     url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),  
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
