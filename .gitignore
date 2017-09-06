@@ -10,7 +10,8 @@ pip-selfcheck.json
 __pycache__/
 *.py[cod]
 *$py.class
-
+static_cdn
+media_cdn
 # C extensions
 *.so
 

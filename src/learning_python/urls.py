@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
+    # url(r'^tags/', include('tags.urls', namespace='tags')),
     # =========================== API ====================================
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
@@ -45,6 +46,8 @@ urlpatterns = [
     url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),  
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^swagger/$', schema_view), 
+    url(r'^markdownx/', include('markdownx.urls')),
+
 ]
 
 urlpatterns += i18n_patterns(

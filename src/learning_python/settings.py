@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     # third party
     'crispy_forms',
+    'markdownx',
     'pagedown',
     'rest_framework',
     'rest_framework_swagger',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'comments',
     'posts',
+    'tags',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -220,3 +222,19 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
     'JWT_AUTH_COOKIE': None,
 }
+
+
+# FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.sane_lists',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.extra',
+]
+
+
+
+
+
+
+

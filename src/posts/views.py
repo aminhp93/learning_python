@@ -14,13 +14,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import (
-		FormView,
-		ListView,
-		DetailView,
-		CreateView,
-		UpdateView,
-		DeleteView,
-	)
+	FormView,
+	ListView,
+	DetailView,
+	CreateView,
+	UpdateView,
+	DeleteView,
+)
 
 from comments.models import Comment
 from comments.forms import CommentForm
