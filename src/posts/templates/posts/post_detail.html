@@ -1,20 +1,13 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %} | Post Detail {% endblock %} {% block content %} 
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %} | Post Detail {% endblock %} {% block content %}
 <h1>Post Detail - ID: {{ object.id }}</h1> {% if object.image %}
 <img src="{{ object.image.url }}" alt="" class="img-fluid"> {% endif %}
-
-
-
 <div>Title: {{ object.title }}</div>
-
-
 <div id="before" style="display: none">{{ object.content }}</div>
 <div id="result">Result</div>
-<div>Draft: {{ object.draft }}</div>
 <div>Publish: {{ object.publish }}</div>
 <div>Draft: {{ object.draft }}</div>
-<div>Tags: {% for tag in object.tag_set.all %}
-        <a href="#">{{ tag.tag }}</a>
-    {% endfor %}
+<div>Tags: {% for tag in object.tags.all %}
+    <a href="#">{{ tag.tag }}</a> {% endfor %}
 </div>
 <p class='lead'>Comments</p>
 {% if request.user.is_authenticated %}

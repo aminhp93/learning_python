@@ -11,7 +11,7 @@ except:
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
 from django.views.generic import (
 	FormView,
@@ -26,6 +26,7 @@ from comments.models import Comment
 from comments.forms import CommentForm
 from .models import Post
 from .forms import PostForm
+from tags.models import Tag
 
 # Create your views here.
 class PostListView(ListView):
@@ -43,9 +44,12 @@ class PostCreateView(FormView):
 	# fields = ['title', 'content', 'publish', 'language']
 
 	def form_valid(self, form):
-		form.save()
+		# self.object = form.save(commit=False)
+		# if form.cleaned_data["tag"]:
+		# 	new_tag = Tag.objects.create(tag=form.cleaned_data["tag"])
+		# 	post.tags.append(new_tag)
+		# 	post.save()
 		return super(PostCreateView, self).form_valid(form)
-
 
 class PostDetailView(DetailView):
 	model = Post
@@ -93,7 +97,7 @@ def post_detail(request, slug=None):
 						)
 		return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
-
+	print(dir(instance))
 	comments = instance.comments
 	context = {
 		"title": instance.title,

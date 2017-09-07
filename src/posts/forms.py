@@ -5,6 +5,7 @@ from .models import Post
 class PostForm(forms.ModelForm):
 	content = forms.CharField(widget=forms.Textarea(attrs={"id": "post_content"}))
 	publish = forms.DateField(widget=forms.SelectDateWidget)
+	tag = forms.CharField()
 	class Meta:
 		model = Post
 		fields = [
@@ -13,6 +14,8 @@ class PostForm(forms.ModelForm):
 			"draft",
 			"publish",
 			"image",
+			"tags",
+			"tag",
 		]
 
 		def clean_content(request, obj):

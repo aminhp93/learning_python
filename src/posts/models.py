@@ -47,7 +47,7 @@ class Post(models.Model):
 	height_field= models.IntegerField(default=0)
 	read_time	= models.IntegerField(default=0)
 	comments 	= GenericRelation(Comment)
-	tag			= models.ManyToManyField(Tag)
+	tags		= models.ManyToManyField(Tag, blank=True)
 	updated		= models.DateTimeField(auto_now=True)
 	timestamp	= models.DateTimeField(auto_now_add=True)
 

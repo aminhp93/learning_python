@@ -1,12 +1,15 @@
 from django.shortcuts import render
 
-# Create your views here.
+from tags.models import Tag
+
 def tag_list(request):
 	template = "tags/tag_list.html"
-	context = {}
+	queryset = Tag.objects.all()
+	context = {"tag_list": queryset}
 	return render(request, template, context)
 
-def tag_related(request):
+def tag_related(request, slug):
 	template = "tags/tag_related.html"
-	context = {}
+	tag_instance = Tag.objects.filter(tag=slug)
+	context = {"tag_instance": tag_instance}
 	return render(request, template, context)
