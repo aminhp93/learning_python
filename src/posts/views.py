@@ -8,6 +8,7 @@ try:
 except: 
     pass
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
@@ -37,11 +38,17 @@ class PostListView(ListView):
 		return context
 
 class PostCreateView(FormView):
+
 	template_name = 'posts/post_form.html'
 	model = Post
 	form_class = PostForm
 	success_url = reverse_lazy("posts:list")
 	# fields = ['title', 'content', 'publish', 'language']
+
+	def dispatch(self, request, *args, **kwargs):
+		if not self.request.user.is_authenticated:
+			raise Http404
+		return super(PostCreateView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		# self.object = form.save(commit=False)
@@ -61,9 +68,9 @@ class PostDetailView(DetailView):
 
 def post_detail(request, slug=None):
 	instance = get_object_or_404(Post, slug=slug)
-	if instance.publish > timezone.now().date() or instance.draft:
-		if not request.user.is_staff or not request.user.is_superuser:
-			raise Http404
+	# if instance.publish > timezone.now().date() or instance.draft:
+		# if not request.user.is_staff or not request.user.is_superuser:
+			# raise Http404
 	# share_string = quote_plus(instance.content)
 
 	initial_data = {
@@ -97,7 +104,6 @@ def post_detail(request, slug=None):
 						)
 		return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
-	print(dir(instance))
 	comments = instance.comments
 	context = {
 		"title": instance.title,
@@ -108,11 +114,17 @@ def post_detail(request, slug=None):
 	}
 	return render(request, "posts/post_detail.html", context)
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'posts/post_form.html'
 	model = Post
 	form_class = PostForm
 	success_url = reverse_lazy("posts:list")
+
+	def dispatch(self, request, *args, **kwargs):
+		instance = self.get_object()
+		if instance.user != self.request.user:
+			raise Http404
+		return super(PostUpdateView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		form.save()
@@ -122,3 +134,9 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
 	model = Post
 	success_url = reverse_lazy("posts:list")
+
+	def dispatch(self, request, *args, **kwargs):
+		instance = self.get_object()
+		if instance.user != self.request.user:
+			raise Http404
+		return super(PostDeleteView, self).dispatch(request, *args, **kwargs)
