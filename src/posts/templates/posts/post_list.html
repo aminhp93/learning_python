@@ -12,6 +12,7 @@
                 <a class="tag" href="#">#{{ tag.tag }}</a> {% endfor %}
             </div>
             <div>{{ post.formatted_markdown|safe|truncatechars:300 }}</div>
+            <div>{{ post.content|truncatechars:300 }}</div>
             <hr>
         </div>
         {% endfor %}

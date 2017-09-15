@@ -12,7 +12,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 from rest_framework.views import exception_handler
 
-def unique_string_generator(size=5, chars=string.ascii_lowercase + string.digits):
+def unique_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
     return "".join(random.choice(chars) for _ in range(size))
 
 def create_slug(instance, new_slug=None):
