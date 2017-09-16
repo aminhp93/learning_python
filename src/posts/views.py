@@ -51,23 +51,20 @@ class PostCreateView(FormView):
 		return super(PostCreateView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
-		post = form.save(commit=False)
-		post.save()
+		post = form.save()
+		form_valid = super(PostCreateView, self).form_valid(form)
 		if form.cleaned_data["tag"]:
 			new_tag, created = Tag.objects.get_or_create(tag=form.cleaned_data["tag"])
 		else:
 			new_tag, created = Tag.objects.get_or_create(tag="blog")
 		post.tags.add(new_tag)
-
-		form.save()
-		return super(PostCreateView, self).form_valid(form)
+		return form_valid
 
 class PostDetailView(DetailView):
 	model = Post
 
 	def get_context_data(self, **kwargs):
 		context = super(PostDetailView, self).get_context_data(**kwargs)
-		print(dir(context['object']))
 		return context
 
 def post_detail(request, slug=None):
@@ -131,25 +128,15 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 		return super(PostUpdateView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
-		post = form.save(commit=False)
-		post.save()
+		post = form.save()
+		# post.save()
+		form_valid = super(PostUpdateView, self).form_valid(form)
 		if form.cleaned_data["tag"]:
-			print(form.cleaned_data['tag'])
 			new_tag, created = Tag.objects.get_or_create(tag=form.cleaned_data["tag"])
-			print(new_tag, created)
 		else:
 			new_tag, created = Tag.objects.get_or_create(tag="blog")
-		print(post.tags.all())
 		post.tags.add(new_tag)
-		print(post.tags.all())
-		print(post.id)
-		print(type(post))
-		post.save()
-		print(Post.objects.get(id=2).tags)
-
-		# form.save()
-		return super(PostUpdateView, self).form_valid(form)
-
+		return form_valid
 
 class PostDeleteView(DeleteView):
 	model = Post

@@ -1,5 +1,11 @@
 {% extends 'base.html' %} {% block title %} | Tag Detail {% endblock %} {% block style %}{% endblock%}{% block content %}
+<h1>Results for {{ tag_instance }}</h1> {% for post in tag_instance.post_set.all %}
+<div>
+    <div>
+        <a class="title" href="{{ post.get_absolute_url }}">{{ post.title}}</a> {% for tag in post.tags.all %}
+        <a class="tag" href="{% url 'tags:related' slug=tag.tag %}">#{{ tag.tag }}</a> {% endfor %}
+    </div>
+    <div>{{ post.formatted_markdown|safe|truncatechars:300 }}</div>
+    <hr>
 </div>
-{{ tag_instance.post_set.all }}
-</div>
-{% endblock %}
+{% endfor %} {% endblock %}
