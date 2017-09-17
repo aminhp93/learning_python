@@ -3,7 +3,7 @@ from django import forms
 from .models import Post
 
 class PostForm(forms.ModelForm):
-	content = forms.CharField(widget=forms.Textarea(attrs={"id": "post_content"}))
+	content = forms.CharField(widget=forms.Textarea(attrs={"id": "post_content"}), required=False)
 	publish = forms.DateField(widget=forms.SelectDateWidget)
 	tag = forms.CharField(required=False)
 	class Meta:

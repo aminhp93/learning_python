@@ -2,7 +2,7 @@
 <h1>Post Detail - ID: {{ object.id }}</h1> {% if object.image %}
 <img src="{{ object.image.url }}" alt="" class="img-fluid"> {% endif %}
 <div>Title: {{ object.title }}</div>
-<div id="before" style="display: none">{{ object.content }}</div>
+<div>{{ object.formatted_markdown|safe }}</div>
 <div id="result">Result</div>
 <div>Publish: {{ object.publish }}</div>
 <div>Draft: {{ object.draft }}</div>
