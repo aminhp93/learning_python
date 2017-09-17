@@ -82,26 +82,34 @@ $(document).ready(function() {
         // styleSelectedText: false,
         tabSize: 4,
         toolbar: [{
-                name: "custom",
-                action: function customFunction(editor) {
-                    // Add your own code
+                name: "redText",
+                action: function customCode(editor) {
+                    var cm = editor.codemirror;
+                    var output = '';
+                    var selectedText = cm.getSelection();
+                    var text = selectedText || 'placeholder';
+
+                    output = '!!' + text + '!!';
+                    cm.replaceSelection(output);
                 },
-                className: "fa fa-star",
-                title: "Custom Button",
+                className: "fa fa-bold",
+                title: "Red text (Ctrl/Cmd-Alt-R)",
             },
-            "bold", "italic", "strikethrough", "heading", "heading-smaller", "heading-bigger", "heading-1", "heading-2", "heading-3", "|", "quote", "unordered-list", "ordered-list", "clean-block", "link", "image", "table", "horizontal-rule", "|", "preview", "side-by-side", "fullscreen", "guide"
+
+
+            "bold", "italic", "strikethrough", "heading", "heading-smaller", "heading-bigger", "heading-1", "heading-2", "heading-3", "|", "code", "quote", "unordered-list", "ordered-list", "clean-block", "link", "image", "table", "horizontal-rule", "|", "preview", "side-by-side", "fullscreen", "guide", "redText"
         ],
         toolbarTips: true,
     });
-    $("#post_content").removeAttr("required");
-    function run() {
-        var text = $('#before').text();        
-        converter = new showdown.Converter(),
-        html = converter.makeHtml(text);
-        $('#result').html(html);
+    // $("#post_content").removeAttr("required");
+    // function run() {
+    //     var text = $('#before').text();        
+    //     converter = new showdown.Converter(),
+    //     html = converter.makeHtml(text);
+    //     $('#result').html(html);
         
-    }
-    run()
+    // }
+    // run()
 });
 </script>
 
