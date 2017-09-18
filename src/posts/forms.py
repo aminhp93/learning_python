@@ -1,5 +1,6 @@
 from django import forms
 
+from django.utils.text import slugify
 from .models import Post
 
 class PostForm(forms.ModelForm):
@@ -18,6 +19,5 @@ class PostForm(forms.ModelForm):
 			"tag",
 		]
 
-		def clean_content(request, obj):
-			print('clean contnet')
-			print(request, obj)
+	def clean_tag(self):
+		return slugify(self.cleaned_data['tag'])

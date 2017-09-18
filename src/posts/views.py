@@ -129,13 +129,15 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 	def dispatch(self, request, *args, **kwargs):
 		instance = self.get_object()
-		if instance.user != self.request.user:
-			raise Http404
+		print(instance.user)
+		print(self.request.user)
+		if not self.request.user.is_superuser:
+			if instance.user != self.request.user:
+				raise Http404
 		return super(PostUpdateView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		post = form.save()
-		# post.save()
 		form_valid = super(PostUpdateView, self).form_valid(form)
 		if form.cleaned_data["tag"]:
 			new_tag, created = Tag.objects.get_or_create(tag=form.cleaned_data["tag"])
