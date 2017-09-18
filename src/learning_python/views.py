@@ -32,6 +32,7 @@ class Home(View):
 
 class Contact(View):
 	def get(self, request, *args, **kwargs):
+		
 		template = "contact.html"
 		context = {}
 		return render(request, template, context)
@@ -62,3 +63,16 @@ def error500(request):
 
 def translate(request):
 	return render(request, 'contact.html', {})
+
+# def search(request):
+# 	var data = {
+#       email: "minhpn.org.ec@gmail.com",
+#       password: "Miamikki521"
+#     };
+  
+#     url = "/api-token-auth/"
+#     response = request.post(url, data)
+#     print(response)
+# 	return render(request, template, context)
+
+

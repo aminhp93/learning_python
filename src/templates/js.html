@@ -4,13 +4,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.3/showdown.min.js"></script> -->
-
-<script src="{% static 'public/js/jquery-3.2.1.slim.min.js' %}" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<!-- <script src="{% static 'public/js/jquery-3.2.1.slim.min.js' %}" crossorigin="anonymous"></script> -->
 <script src="{% static 'public/js/popper.min.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'public/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'public/js/marked.min.js' %}"></script>
-<script src="{% static 'public/js/simplede.min.js' %}"></script> 
-<script src="{% static 'public/js/showdown.min.js' %}"></script> 
+<script src="{% static 'public/js/simplede.min.js' %}"></script>
+<script src="{% static 'public/js/showdown.min.js' %}"></script>
 <!-- <script src="{% static 'public/js/showdown.min.js.map' %}"></script>  -->
 <!-- <script src="{% static 'public/js/popper.min.js.map' %}"></script>  -->
 <script>
@@ -107,9 +108,96 @@ $(document).ready(function() {
     //     converter = new showdown.Converter(),
     //     html = converter.makeHtml(text);
     //     $('#result').html(html);
-        
+
     // }
     // run()
-});
-</script>
 
+
+    $("#query").autocomplete({
+        source: [],
+        select: function(event, ui) {
+            event.preventDefault();
+            $("#query").val(ui.item.label);
+            window.location.href = ui.item.value;
+        },
+        focus: function(event, ui) {
+            $("#query").val(ui.item.label);
+        },
+        minLength: 0,
+        delay: 500,
+    });
+
+    $("input#query").keyup(function() {
+        var query = $(this).val();
+        if (query.length > 0) {
+            dataString = 'q=' + query;
+            $.ajax({
+                type: "GET",
+                url: "/api/posts/",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                data: dataString,
+                success: function(response) {
+                    var availableHints = [];
+                    for (var i in response.results) {
+                        // console.log(response.results[i])
+                        availableHints.push({
+                            label: response.results[i].title.replace(/\s+/g, "-"),
+                        }, {
+                            label: response.results[i].content,
+                        });
+                    }
+                    $("#query").autocomplete({
+                        source: availableHints,
+                    });
+                }
+            });
+        }
+    });
+
+
+    // var jQuery = window.$;   
+
+    // using jQuery
+    // function getCookie(name) {
+    //     var cookieValue = null;
+    //     if (document.cookie && document.cookie != '') {
+    //         var cookies = document.cookie.split(';');
+    //         for (var i = 0; i < cookies.length; i++) {
+    //             var cookie = jQuery.trim(cookies[i]);
+    //             // Does this cookie string begin with the name we want?
+    //             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+    //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     return cookieValue;
+    // }
+
+    // function csrfSafeMethod(method) {
+    //     // these HTTP methods do not require CSRF protection
+    //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    // }
+
+    // var csrftoken = getCookie('csrftoken');
+    // var csrftoken = Cookies.get('csrftoken');
+
+    
+    // var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    // console.log(csrftoken);
+
+    // $.ajaxSetup({
+    //     beforeSend: function(xhr, settings) {
+    //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+    //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    //         }
+    //     }
+    // });
+
+
+    // module.exports = csrftoken;
+})
+</script>

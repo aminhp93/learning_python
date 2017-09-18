@@ -21,6 +21,7 @@ class PostListSerializer(serializers.ModelSerializer):
 		fields = [
 			'url',
 			'title',
+			'content',
 			'updated',
 			'timestamp'
 		]

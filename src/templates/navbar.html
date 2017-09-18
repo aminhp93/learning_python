@@ -17,8 +17,9 @@
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-md-0">
-                        <input class="form-control" type="text" placeholder="What are you looking for?">
+                    <form class="form-inline my-2 my-md-0">{% csrf_token %}
+                        <input id="query" name="query" class="form-control" type="text" placeholder="What are you looking for?">
+                    }
                     </form>
                     <a class="btn btn-light" href=""><i class="fa fa-info" aria-hidden="true"></i></a>
                     <a class="btn btn-light" href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a> {% if user.is_authenticated %}
