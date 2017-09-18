@@ -37,6 +37,12 @@ class PostListView(ListView):
 		context = super(PostListView, self).get_context_data(**kwargs)
 		return context
 
+	def get_queryset(self):
+		instances = super().get_queryset()
+		if not self.request.user.is_superuser:	
+			instances = instances.exclude(tags__tag='hango')
+		return instances
+
 class PostCreateView(FormView):
 
 	template_name = 'posts/post_form.html'

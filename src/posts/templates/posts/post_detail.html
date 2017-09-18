@@ -2,8 +2,7 @@
 <h1>Post Detail - ID: {{ object.id }}</h1> {% if object.image %}
 <img src="{{ object.image.url }}" alt="" class="img-fluid"> {% endif %}
 <div>Title: {{ object.title }}</div>
-<div>{{ object.formatted_markdown|safe }}</div>
-<div id="result">Result</div>
+<div>Content: {{ object.formatted_markdown|safe }}</div>
 <div>Publish: {{ object.publish }}</div>
 <div>Draft: {{ object.draft }}</div>
 <div>Tags: {% for tag in object.tags.all %}
