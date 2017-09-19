@@ -1,17 +1,36 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %} | Post Detail {% endblock %} {% block content %}
-<h1>Post Detail - ID: {{ object.id }}</h1> {% if object.image %}
-<img src="{{ object.image.url }}" alt="" class="img-fluid"> {% endif %}
-<div>Title: {{ object.title }}</div>
-<div>Content: {{ object.formatted_markdown|safe }}</div>
-<div>Publish: {{ object.publish }}</div>
-<div>Draft: {{ object.draft }}</div>
-<div>Tags: {% for tag in object.tags.all %}
-    <a href="{% url 'tags:related' slug=tag.tag %}">#{{ tag.tag }}</a> {% endfor %}
-</div>
-<p class='lead'>Comments</p>
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+{% block title %} | Post Detail {% endblock %}
+
+{% block content %}
+
+<!-- ==================================================================== -->
+                            <!-- POST DETAIL -->
+<!-- ==================================================================== -->
+
+<br>
+<h1>{{ object.title }}</h1>
+{% for tag in object.tags.all %}
+    <a href="{% url 'tags:related' slug=tag.tag %}">#{{ tag.tag }}</a> 
+{% endfor %}
+<br>
+<div><i class="fa fa-calendar" aria-hidden="true"></i>
+{{ object.timestamp|timesince }} ago<span class="pull-right"><i class="fa fa-eye" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-paperclip" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-comments" aria-hidden="true"></i>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="fa fa-plus-square-o" aria-hidden="true"> Add to my series</i></a>&nbsp;&nbsp;
+{% if request.user == object.user %}
+<a href="{% url 'posts:update' slug=object.slug %}"><i class="fa fa-pencil-square-o" aria-hidden="true">Edit</i></a>&nbsp;&nbsp;
+{% endif %}
+<a href="#"><i class="fa fa-flag" aria-hidden="true"></i> Report</a></span></div>
+<br>
+<div>{{ object.formatted_markdown|safe }}</div>
+
+<!-- ==================================================================== -->
+                            <!-- COMMENT -->
+<!-- ==================================================================== -->
+
+<h3 class='lead'>Comments</h3>
 {% if request.user.is_authenticated %}
 <form method="POST" action="."> {% csrf_token %} {{ comment_form|crispy }}
-    <input type='submit' value='Post comment' class='btn btn-default'>
+    <input type='submit' value='Post comment' class='btn btn-default pull-right'>
 </form>
 {% else %}
 <p>You must login to comment </p>

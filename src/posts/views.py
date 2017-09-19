@@ -1,13 +1,14 @@
 try:
-    from urllib import quote_plus #python 2
+	from urllib import quote_plus #python 2
 except:
-    pass
+	pass
 
 try:
-    from urllib.parse import quote_plus #python 3
+	from urllib.parse import quote_plus #python 3
 except: 
-    pass
+	pass
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
@@ -35,6 +36,17 @@ class PostListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(PostListView, self).get_context_data(**kwargs)
+		paginator = Paginator(context['post_list'], 10)
+
+		page = self.request.GET.get('page')
+		try:
+			context['post_list'] = paginator.page(page)
+		except PageNotAnInteger:
+			# If page is not an integer, deliver first page.
+			context['post_list'] = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			context['post_list'] = paginator.page(paginator.num_pages)
 		return context
 
 	def get_queryset(self):

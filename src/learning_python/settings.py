@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'learning_python',
         'USER': 'root',
-        'PASSWORD': 'minh1234',
+        'PASSWORD': 'Miamikki521',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -133,7 +133,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    '/var/www/learning_python/static/'
 ]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
