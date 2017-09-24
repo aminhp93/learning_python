@@ -1,8 +1,9 @@
 {% extends 'base.html' %} {% block title %} | Tag List {% endblock %} {% block style %}{% endblock%}{% block content %}
-
-</div>
-{% for tag in tag_list %}
-	<a href="{{ tag.get_absolute_url }}">#{{ tag.tag }}</a> |
-{% endfor %}
+<div class="row">
+    <div class="col-md-12">
+    	<br>
+        {% for tag in tag_list %}
+        <a class="tag" href="{{ tag.get_absolute_url }}">{{ tag.tag }}</a> {% endfor %}
+    </div>
 </div>
 {% endblock %}

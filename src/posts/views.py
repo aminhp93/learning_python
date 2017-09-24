@@ -8,6 +8,7 @@ try:
 except: 
 	pass
 
+from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
@@ -30,6 +31,8 @@ from .models import Post
 from .forms import PostForm
 from tags.models import Tag
 
+User = get_user_model()
+
 # Create your views here.
 class PostListView(ListView):
 	model = Post
@@ -47,6 +50,13 @@ class PostListView(ListView):
 		except EmptyPage:
 			# If page is out of range (e.g. 9999), deliver last page of results.
 			context['post_list'] = paginator.page(paginator.num_pages)
+
+		user_list = User.objects.all()
+		context['user_list'] = user_list
+
+		tag_list = Tag.objects.all()
+		context['tag_list'] = tag_list
+
 		return context
 
 	def get_queryset(self):

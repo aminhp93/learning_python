@@ -1,58 +1,49 @@
-{% extends 'base.html' %} 
-{% load crispy_forms_tags %} 
-{% block title %} | Post Detail {% endblock %}
-
-{% block content %}
-
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %} | Post Detail {% endblock %} {% block content %}
 <!-- ==================================================================== -->
-                            <!-- POST DETAIL -->
+<!-- POST DETAIL -->
 <!-- ==================================================================== -->
-
-<br>
-<h1>{{ object.title }}</h1>
-{% for tag in object.tags.all %}
-    <a href="{% url 'tags:related' slug=tag.tag %}">#{{ tag.tag }}</a> 
-{% endfor %}
-<br>
-<div><i class="fa fa-calendar" aria-hidden="true"></i>
-{{ object.timestamp|timesince }} ago<span class="pull-right"><i class="fa fa-eye" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-paperclip" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-comments" aria-hidden="true"></i>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="fa fa-plus-square-o" aria-hidden="true"> Add to my series</i></a>&nbsp;&nbsp;
-{% if request.user == object.user %}
-<a href="{% url 'posts:update' slug=object.slug %}"><i class="fa fa-pencil-square-o" aria-hidden="true">Edit</i></a>&nbsp;&nbsp;
-{% endif %}
-<a href="#"><i class="fa fa-flag" aria-hidden="true"></i> Report</a></span></div>
-<br>
-<div>{{ object.formatted_markdown|safe }}</div>
-
-<!-- ==================================================================== -->
-                            <!-- COMMENT -->
-<!-- ==================================================================== -->
-
-<h3 class='lead'>Comments</h3>
-{% if request.user.is_authenticated %}
-<form method="POST" action="."> {% csrf_token %} {{ comment_form|crispy }}
-    <input type='submit' value='Post comment' class='btn btn-default pull-right'>
-</form>
-{% else %}
-<p>You must login to comment </p>
-{% endif %}
-<hr/> {% for comment in comments %}
-<blockquote>
-    <p>{{ comment.content }}</p>
-    <footer>via {{ comment.user }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} | {% endif %} <a class='comment-reply-btn' href='#'>Reply</a> | <a class='' href='{{ comment.get_absolute_url }}'>Thread</a></footer>
-    <div class='comment-reply'>
-        {% for child_comment in comment.children %}
-        <blockquote>
-            <p>{{ child_comment.content }}</p>
-            <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }} ago</footer>
-        </blockquote>
-        {% endfor %} {% if request.user.is_authenticated %}
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <br>
+        <h1>{{ object.title }}</h1> {% for tag in object.tags.all %}
+        <a href="{% url 'tags:related' slug=tag.tag %}">#{{ tag.tag }}</a> {% endfor %}
+        <div><i class="fa fa-calendar" aria-hidden="true"></i> {{ object.timestamp|timesince }} ago<span class="pull-right"><i class="fa fa-eye" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-paperclip" aria-hidden="true"></i>1&nbsp;&nbsp;<i class="fa fa-comments" aria-hidden="true"></i>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="fa fa-plus-square-o" aria-hidden="true"> Add to my series</i></a>&nbsp;&nbsp;
+        {% if request.user == object.user %}
+        <a href="{% url 'posts:update' slug=object.slug %}"><i class="fa fa-pencil-square-o" aria-hidden="true">Edit</i></a>&nbsp;&nbsp;
+        {% endif %}
+        <a href="#"><i class="fa fa-flag" aria-hidden="true"></i> Report</a></span></div>
+        <br>
+        <div>{{ object.formatted_markdown|safe }}</div>
+        <!-- ==================================================================== -->
+        <!-- COMMENT -->
+        <!-- ==================================================================== -->
+        <h3 class='lead'>Comments</h3> {% if request.user.is_authenticated %}
         <form method="POST" action="."> {% csrf_token %} {{ comment_form|crispy }}
-            <input type='hidden' name='parent_id' value='{{ comment.id }}'>
-            <input type='submit' value='Reply' class='btn btn-default'>
+            <input type='submit' value='Post comment' class='btn btn-default pull-right'>
         </form>
         {% else %}
         <p>You must login to comment </p>
         {% endif %}
+        <hr/> {% for comment in comments %}
+        <blockquote>
+            <p>{{ comment.content }}</p>
+            <footer>via {{ comment.user }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} | {% endif %} <a class='comment-reply-btn' href='#'>Reply</a> | <a class='' href='{{ comment.get_absolute_url }}'>Thread</a></footer>
+            <div class='comment-reply'>
+                {% for child_comment in comment.children %}
+                <blockquote>
+                    <p>{{ child_comment.content }}</p>
+                    <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }} ago</footer>
+                </blockquote>
+                {% endfor %} {% if request.user.is_authenticated %}
+                <form method="POST" action="."> {% csrf_token %} {{ comment_form|crispy }}
+                    <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                    <input type='submit' value='Reply' class='btn btn-default'>
+                </form>
+                {% else %}
+                <p>You must login to comment </p>
+                {% endif %}
+            </div>
+        </blockquote>
     </div>
-</blockquote>
+</div>
 {% endfor %} {% endblock %}
