@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
     url(r'^tags/', include('tags.urls', namespace='tags')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+
     # =========================== API ====================================
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),

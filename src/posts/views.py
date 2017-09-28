@@ -55,6 +55,8 @@ class PostListView(ListView):
 		context['user_list'] = user_list
 
 		tag_list = Tag.objects.all()
+		if not self.request.user.is_superuser:
+			tag_list = Tag.objects.all().exclude(tag='hango')
 		context['tag_list'] = tag_list
 
 		return context
@@ -151,8 +153,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 	def dispatch(self, request, *args, **kwargs):
 		instance = self.get_object()
-		print(instance.user)
-		print(self.request.user)
 		if not self.request.user.is_superuser:
 			if instance.user != self.request.user:
 				raise Http404

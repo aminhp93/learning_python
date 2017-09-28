@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'pagedown',
     'rest_framework',
     'rest_framework_swagger',
+    'social_django',
 
     # app
     'accounts',
@@ -54,7 +55,9 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',    
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',   
 ]
 
 ROOT_URLCONF = 'learning_python.urls'
@@ -70,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect', # <--
             ],
         },
     },
@@ -82,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'learning_python',
         'USER': 'root',
-        'PASSWORD': 'Miamikki521',
+        'PASSWORD': 'minh1234',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -232,9 +237,23 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
 
+    'django.contrib.auth.backends.ModelBackend',
+)
 
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
 
+SOCIAL_AUTH_GITHUB_KEY = 'ef588a412819e0bb5101'
+SOCIAL_AUTH_GITHUB_SECRET = 'd55cbd86143bda71502a76877b3aae89a9dfafe1'
 
+SOCIAL_AUTH_TWITTER_KEY = 'dX9VC75etjgCYdgZPxXypCHdN'
+SOCIAL_AUTH_TWITTER_SECRET = 'S6KQKUhC3g3tcsbrpFxDYVevxCF2AfhPy5ZHwBhMGmOPL2bue8'
 
-
+SOCIAL_AUTH_FACEBOOK_KEY = '451821651x33143'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '524fada3c3ca5adgb279da535da1d863'  # App Secret
