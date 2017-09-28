@@ -15,6 +15,10 @@ from learning_python.utils import create_slug, get_read_time
 from comments.models import Comment
 from tags.models import Tag
 
+from .search import PostIndex
+
+
+
 # Create your models here.
 class PostManager(models.Manager):
 	def active(self, *args, **kwargs):
@@ -30,13 +34,13 @@ def upload_location(instance, filename):
 	return filename
 
 class Post(models.Model):
-	user 		= models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
-	title 		= models.CharField(max_length=120)
-	slug 		= models.SlugField(unique=True)
-	content		= MarkdownxField()
-	draft		= models.BooleanField(default=False)
-	publish		= models.DateField(auto_now=False, auto_now_add=False)
-	image		= models.ImageField(
+	user        = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+	title       = models.CharField(max_length=120)
+	slug        = models.SlugField(unique=True)
+	content     = MarkdownxField()
+	draft       = models.BooleanField(default=False)
+	publish     = models.DateField(auto_now=False, auto_now_add=False)
+	image       = models.ImageField(
 								upload_to=upload_location,
 								null=True,
 								blank=True,
@@ -45,11 +49,11 @@ class Post(models.Model):
 							)
 	width_field = models.IntegerField(default=0, null=True)
 	height_field= models.IntegerField(default=0, null=True)
-	read_time	= models.IntegerField(default=0)
-	comments 	= GenericRelation(Comment)
-	tags		= models.ManyToManyField(Tag, blank=True)
-	updated		= models.DateTimeField(auto_now=True)
-	timestamp	= models.DateTimeField(auto_now_add=True)
+	read_time   = models.IntegerField(default=0)
+	comments    = GenericRelation(Comment)
+	tags        = models.ManyToManyField(Tag, blank=True)
+	updated     = models.DateTimeField(auto_now=True)
+	timestamp   = models.DateTimeField(auto_now_add=True)
 
 	objects = PostManager()
 
@@ -63,10 +67,10 @@ class Post(models.Model):
 		return reverse("posts:detail", kwargs={"slug": self.slug})
 
 	# def get_markdown(self):
-	# 	content = self.content
-	# 	result = mark_safe(content)
-	# 	print(result)
-	# 	return result
+	#   content = self.content
+	#   result = mark_safe(content)
+	#   print(result)
+	#   return result
 
 
 	@property
@@ -85,13 +89,33 @@ class Post(models.Model):
 	def formatted_markdown(self):
 		return markdownify(self.content)
 
+
+	def indexing(self):
+		obj = PostIndex(
+			meta={'id': self.id},
+			user=self.user.username,
+			timestamp=self.timestamp,
+			title=self.title,
+			content=self.content
+		)
+		obj.save()
+		return obj.to_dict(include_meta=True)
+
+
 def pre_save_book_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
 
 	# if instance.content:
-	# 	html_string = instance.get_markdown()
-	# 	read_time_var = get_read_time(html_string)
-	# 	instance.read_time = read_time_var
+	#   html_string = instance.get_markdown()
+	#   read_time_var = get_read_time(html_string)
+	#   instance.read_time = read_time_var
 
 pre_save.connect(pre_save_book_receiver, sender=Post)
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Post)
+def index_post(sender, instance, **kwargs):
+    instance.indexing()
