@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^posts/', include('posts.urls', namespace='posts')),
     url(r'^tags/', include('tags.urls', namespace='tags')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+    url(r'^search/', include('haystack.urls')),
 
     # =========================== API ====================================
     url(r'^api-token-auth/', obtain_jwt_token),

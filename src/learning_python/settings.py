@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'social_django',
+    'haystack',
 
     # app
     'accounts',
@@ -257,3 +258,19 @@ SOCIAL_AUTH_TWITTER_SECRET = 'S6KQKUhC3g3tcsbrpFxDYVevxCF2AfhPy5ZHwBhMGmOPL2bue8
 
 SOCIAL_AUTH_FACEBOOK_KEY = '451821651x33143'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '524fada3c3ca5adgb279da535da1d863'  # App Secret
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+#         'URL': 'http://127.0.0.1:9200/',
+#         'INDEX_NAME': 'haystack',
+#     },
+# }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'posts',
+    },
+}

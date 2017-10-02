@@ -15,15 +15,10 @@ from learning_python.utils import create_slug, get_read_time
 from comments.models import Comment
 from tags.models import Tag
 
-from .search import PostIndex
-
-
-
 # Create your models here.
 class PostManager(models.Manager):
 	def active(self, *args, **kwargs):
 		return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
-
 
 def upload_location(instance, filename):
 	PostModel = instance.__class__
@@ -90,16 +85,16 @@ class Post(models.Model):
 		return markdownify(self.content)
 
 
-	def indexing(self):
-		obj = PostIndex(
-			meta={'id': self.id},
-			user=self.user.username,
-			timestamp=self.timestamp,
-			title=self.title,
-			content=self.content
-		)
-		obj.save()
-		return obj.to_dict(include_meta=True)
+	# def indexing(self):
+	# 	obj = PostIndex(
+	# 		meta={'id': self.id},
+	# 		user=self.user.username,
+	# 		timestamp=self.timestamp,
+	# 		title=self.title,
+	# 		content=self.content
+	# 	)
+	# 	obj.save()
+	# 	return obj.to_dict(include_meta=True)
 
 
 def pre_save_book_receiver(sender, instance, *args, **kwargs):
@@ -113,9 +108,9 @@ def pre_save_book_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_book_receiver, sender=Post)
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
-@receiver(post_save, sender=Post)
-def index_post(sender, instance, **kwargs):
-    instance.indexing()
+# @receiver(post_save, sender=Post)
+# def index_post(sender, instance, **kwargs):
+#     instance.indexing()
