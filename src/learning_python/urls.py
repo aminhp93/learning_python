@@ -36,7 +36,10 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^posts/', include('posts.urls', namespace='posts')),
     url(r'^tags/', include('tags.urls', namespace='tags')),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^search/', include('haystack.urls')),
+    # url(r'^search/autocomplete/$', autocomplete),
+
 
     # =========================== API ====================================
     url(r'^api-token-auth/', obtain_jwt_token),

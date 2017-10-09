@@ -14,8 +14,8 @@
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-md-0">
-            <input class="form-control" type="text" placeholder="Search">
+        <form class="form-inline my-2 my-md-0" method="get" action="/search">
+            <input class="form-control" type="text" placeholder="Search" id="id_q" name="q">
         </form>
         <a class="btn btn-light" href=""><i class="fa fa-info" aria-hidden="true"></i></a>
         <a class="btn btn-light" href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a> {% if user.is_authenticated %}

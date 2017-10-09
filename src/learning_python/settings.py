@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     # third party
     'crispy_forms',
+    'haystack',
     'markdownx',
     'pagedown',
     'rest_framework',
@@ -87,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'learning_python',
         'USER': 'root',
-        'PASSWORD': 'minh1234',
+        'PASSWORD': 'Miamikki521',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -257,3 +258,17 @@ SOCIAL_AUTH_TWITTER_SECRET = 'S6KQKUhC3g3tcsbrpFxDYVevxCF2AfhPy5ZHwBhMGmOPL2bue8
 
 SOCIAL_AUTH_FACEBOOK_KEY = '451821651x33143'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '524fada3c3ca5adgb279da535da1d863'  # App Secret
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+    
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+

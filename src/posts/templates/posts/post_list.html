@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block title %} | Post List {% endblock %} {% block style %} {% endblock%}{% block content %}
+{% extends 'base.html' %}
+{% load tag_count %}
+{% block title %} | Post List {% endblock %} {% block style %} {% endblock%}{% block content %}
 <br>
 <div class="row">
     <div class="col-md-8">
@@ -38,7 +40,7 @@
         <br><br>
         <div>POPULAR TAGS</div>
         {% for tag in tag_list %}
-        <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag }}</a>
+        <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag|tag_count }}<span class="tag-count">{{ tag.post_set.count }}</span></a>
         {% endfor %}
         <hr>
         <a href="{% url 'tags:list' %}"><i class="fa fa-tags" aria-hidden="true"></i> All tags</a>

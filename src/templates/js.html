@@ -2,124 +2,13 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<!-- static -->
+<!-- STATIC -->
 <script src="{% static 'public/js/popper.min.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'public/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
 <script src="{% static 'public/js/marked.min.js' %}"></script>
 <script src="{% static 'public/js/simplede.min.js' %}"></script>
 <script src="{% static 'public/js/showdown.min.js' %}"></script>
-<script>
-$(document).ready(function() {
-    var simplemde = new SimpleMDE({
-        element: document.getElementById("post_content"),
-        placeholder: 'Markdown syntax is supported. Click  for Help <br>Click  or press "Ctrl + P" to toggle Preview mode Click  or press "F9" to toggle Side by Side Preview mode Click  or press "F11" to toggle Fullscreen mode',
-        tabSize: 4,
-        toolbar: [{
-                name: "redText",
-                action: function customCode(editor) {
-                    var cm = editor.codemirror;
-                    var output = '';
-                    var selectedText = cm.getSelection();
-                    var text = selectedText || 'placeholder';
-
-                    output = '!!' + text + '!!';
-                    cm.replaceSelection(output);
-                },
-                className: "fa fa-bold",
-                title: "Red text (Ctrl/Cmd-Alt-R)",
-            },
-
-
-            "bold", "italic", "strikethrough", "heading", "heading-smaller", "heading-bigger", "heading-1", "heading-2", "heading-3", "|", "code", "quote", "unordered-list", "ordered-list", "clean-block", "link", "image", "table", "horizontal-rule", "|", "preview", "side-by-side", "fullscreen", "guide", "redText"
-        ],
-        toolbarTips: true,
-    });
-
-    $("#query").autocomplete({
-        source: [],
-        select: function(event, ui) {
-            event.preventDefault();
-            $("#query").val(ui.item.label);
-            window.location.href = ui.item.value;
-        },
-        focus: function(event, ui) {
-            $("#query").val(ui.item.label);
-        },
-        minLength: 0,
-        delay: 500,
-    });
-
-    $("input#query").keyup(function() {
-        var query = $(this).val();
-        if (query.length > 0) {
-            dataString = 'q=' + query;
-            $.ajax({
-                type: "GET",
-                url: "/api/posts/",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                data: dataString,
-                success: function(response) {
-                    var availableHints = [];
-                    for (var i in response.results) {
-                        // console.log(response.results[i])
-                        availableHints.push({
-                            label: response.results[i].title.replace(/\s+/g, "-"),
-                        }, {
-                            label: response.results[i].content,
-                        });
-                    }
-                    $("#query").autocomplete({
-                        source: availableHints,
-                    });
-                }
-            });
-        }
-    });
-
-
-    // var jQuery = window.$;   
-
-    // using jQuery
-    // function getCookie(name) {
-    //     var cookieValue = null;
-    //     if (document.cookie && document.cookie != '') {
-    //         var cookies = document.cookie.split(';');
-    //         for (var i = 0; i < cookies.length; i++) {
-    //             var cookie = jQuery.trim(cookies[i]);
-    //             // Does this cookie string begin with the name we want?
-    //             if (cookie.substring(0, name.length + 1) == (name + '=')) {
-    //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     return cookieValue;
-    // }
-
-    // function csrfSafeMethod(method) {
-    //     // these HTTP methods do not require CSRF protection
-    //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    // }
-
-    // var csrftoken = getCookie('csrftoken');
-    // var csrftoken = Cookies.get('csrftoken');
-
-    
-    // var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-    // console.log(csrftoken);
-
-    // $.ajaxSetup({
-    //     beforeSend: function(xhr, settings) {
-    //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-    //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    //         }
-    //     }
-    // });
-
-
-    // module.exports = csrftoken;
-})
-</script>
+<script src="{% static 'public/js/jquery-ui.js' %}"></script>
+<!-- CUSTOM -->
+<script src="{% static 'js/autocomplete.js' %}"></script>
+<script src="{% static 'js/simple-markdown-editor.js' %}"></script>

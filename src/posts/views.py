@@ -56,8 +56,10 @@ class PostListView(ListView):
 
 		tag_list = Tag.objects.all()
 		if not self.request.user.is_superuser:
-			tag_list = Tag.objects.all().exclude(tag='hango')
-		context['tag_list'] = tag_list
+			tag_list = Tag.objects.all().exclude(tag='hango')		
+		
+		tag_list = sorted(tag_list, key=lambda x: x.post_set.count(), reverse=True)
+		context['tag_list'] = tag_list[:10]
 
 		return context
 

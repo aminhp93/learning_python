@@ -1,5 +1,4 @@
 from markdownx.utils import markdownify
-
 from markdownx.models import MarkdownxField
 
 from django.conf import settings
@@ -15,23 +14,15 @@ from learning_python.utils import create_slug, get_read_time
 from comments.models import Comment
 from tags.models import Tag
 
-from .search import PostIndex
-
-
-
-# Create your models here.
 class PostManager(models.Manager):
 	def active(self, *args, **kwargs):
 		return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
 
-
 def upload_location(instance, filename):
 	PostModel = instance.__class__
-
 	new_id = PostModel.objects.order_by('id').last().id + 1
    
 	return "%s/%s" %(new_id, filename)
-	return filename
 
 class Post(models.Model):
 	user        = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
@@ -72,7 +63,6 @@ class Post(models.Model):
 	#   print(result)
 	#   return result
 
-
 	@property
 	def comments(self):
 		instance = self
@@ -90,18 +80,6 @@ class Post(models.Model):
 		return markdownify(self.content)
 
 
-	def indexing(self):
-		obj = PostIndex(
-			meta={'id': self.id},
-			user=self.user.username,
-			timestamp=self.timestamp,
-			title=self.title,
-			content=self.content
-		)
-		obj.save()
-		return obj.to_dict(include_meta=True)
-
-
 def pre_save_book_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
@@ -112,10 +90,3 @@ def pre_save_book_receiver(sender, instance, *args, **kwargs):
 	#   instance.read_time = read_time_var
 
 pre_save.connect(pre_save_book_receiver, sender=Post)
-
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-@receiver(post_save, sender=Post)
-def index_post(sender, instance, **kwargs):
-    instance.indexing()
