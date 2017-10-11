@@ -23,7 +23,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 schema_view = get_swagger_view(title='Pastebin API')
 
-from .views import Home, Contact, RootAPIView, translate
+from .views import Home, Contact, RootAPIView, translate, autocomplete
 
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^tags/', include('tags.urls', namespace='tags')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^search/', include('haystack.urls')),
-    # url(r'^search/autocomplete/$', autocomplete),
+    url(r'^search/autocomplete/$', autocomplete),
 
 
     # =========================== API ====================================

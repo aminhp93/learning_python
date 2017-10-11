@@ -7,33 +7,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Learning Python{% block title %}{% endblock %}</title>
     {% block style %}{% endblock %} {% include 'css.html' %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <style>
-        .editor-preview-side>pre {
-            background-color: #282c34 !important;
-            color: #98c370;
-            padding: 20px;
-            border-radius: 3px;
-        }
+    span.select2.select2-container.select2-container--default {
+        width: 40% !important;
+    }
+    .editor-preview-side>pre {
+        background-color: #282c34 !important;
+        color: #98c370;
+        padding: 20px;
+        border-radius: 3px;
+    }
 
-        pre>code{
-            background-color: #282c34 !important;
-            color: #98c370;
-        }
-       
-        blockquote{
-            color: #686868;
-            border-left: .25rem solid #5488c7;
-            padding: .5rem 1rem;
-            overflow: auto;
-        }
-        .tag-count{
-            background-color: #5488c7;
-            padding: 4px 10px;
-            margin-left: 6px;
-            margin-right: -6px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
+    pre>code {
+        background-color: #282c34 !important;
+        color: #98c370;
+    }
+
+    blockquote {
+        color: #686868;
+        border-left: .25rem solid #5488c7;
+        padding: .5rem 1rem;
+        overflow: auto;
+    }
+
+    .tag-count {
+        background-color: #5488c7;
+        padding: 4px 10px;
+        margin-left: 6px;
+        margin-right: -6px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    em{
+        color: blue;
+        font-weight: bold;
+    }
     </style>
 </head>
 
@@ -41,10 +50,10 @@
     {% include 'messages.html' %} {% include 'navbar.html' %}
     <img src="{% static 'img/banner.jpg' %}" alt="" class="img-fluid"> {% include 'navbar2.html' %}
     <div class="container">
-        {% block content %}{% endblock %}
-        {% include 'footer.html' %}
+        {% block content %}{% endblock %} {% include 'footer.html' %}
     </div>
-     {% include 'js.html' %}
+    {% include 'js.html' %}
+
 </body>
 
 </html>

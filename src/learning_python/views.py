@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import JsonResponse
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -17,6 +18,9 @@ from rest_framework.exceptions import (
 
 from posts.api.serializers import PostListSerializer
 from posts.models import Post
+
+from haystack.query import SearchQuerySet
+
 
 class Home(View):
 	def get(self, request, *args, **kwargs):
@@ -64,15 +68,19 @@ def error500(request):
 def translate(request):
 	return render(request, 'contact.html', {})
 
-# def search(request):
-# 	var data = {
-#       email: "minhpn.org.ec@gmail.com",
-#       password: "Miamikki521"
-#     };
-  
-#     url = "/api-token-auth/"
-#     response = request.post(url, data)
-#     print(response)
-# 	return render(request, template, context)
+def autocomplete(request):
+	sqs = SearchQuerySet().autocomplete(
+		content_auto=request.GET.get(
+			'q',
+			'')).highlight()
+	s = []
+	for result in sqs:
+		if result.highlighted is not None:
+			d = {"title": result.object.title, "slug": result.object.slug, "highlighted": result.highlighted[0], "date": result.object.timestamp}
+			s.append(d)
+	output = {'suggestions': s}
+	response = JsonResponse(output)
+	response['Access-Control-Allow-Origin'] = '*'
+	return response
 
 
