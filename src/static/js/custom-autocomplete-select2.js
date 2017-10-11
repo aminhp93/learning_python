@@ -1,6 +1,6 @@
 $("#id_q").select2({
     ajax: {
-        url: "http://localhost:8000/search/autocomplete",
+        url: "/search/autocomplete",
         dataType: 'json',
         delay: 250,
         data: function(params) {

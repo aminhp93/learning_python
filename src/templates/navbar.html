@@ -14,11 +14,7 @@
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
         </ul>
-       
-
-        
-            <select id="id_q" name="q" multiple="multiple"></select>
-        
+        <select id="id_q" name="q" multiple="multiple"></select>
         <a class="btn btn-light" href=""><i class="fa fa-info" aria-hidden="true"></i></a>
         <a class="btn btn-light" href=""><i class="fa fa-bell-o" aria-hidden="true"></i></a> {% if user.is_authenticated %}
         <a class="btn btn-success" href="{% url 'posts:create' %}"><i class="fa fa-pencil" aria-hidden="true"></i></a> {% endif %}

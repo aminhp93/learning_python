@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load tag_count %}
-{% block title %} | Post List {% endblock %} {% block style %} {% endblock%}{% block content %}
+{% extends 'base.html' %} {% load tag_count %} {% block title %} | Post List {% endblock %} {% block style %} {% endblock%}{% block content %}
 <br>
 <div class="row">
     <div class="col-md-8">
@@ -18,13 +16,17 @@
             <ul class="pagination justify-content-center">
                 {% if post_list.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ post_list.previous_page_number }}" tabindex="-1">Previous</a>
+                    <a class="page-link" href="?page={{ post_list.previous_page_number }}" tabindex="-1"><</a>
                 </li>
                 {% endif %}
-                <li class="page-item"><a class="page-link" href="?page={{ post_list.number}}">{{ post_list.number }}</a></li>
-                {% if post_list.has_next %}
+                
+                {% for i in paginator.page_range %} 
+                     <li class="page-item {% if i == post_list.number %} active {% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}<span class="sr-only">(current)</span></a>
+                    </li>
+                {% endfor %} {% if post_list.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ post_list.next_page_number }}">Next</a>
+                    <a class="page-link" href="?page={{ post_list.next_page_number }}">></a>
                 </li>
                 {% endif %}
             </ul>
@@ -37,11 +39,11 @@
         <a href="#">{% endfor %}</a>
         <hr>
         <a href="#"><i class="fa fa-tags" aria-hidden="true"></i> All authors</a>
-        <br><br>
+        <br>
+        <br>
         <div>POPULAR TAGS</div>
         {% for tag in tag_list %}
-        <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag|tag_count }}<span class="tag-count">{{ tag.post_set.count }}</span></a>
-        {% endfor %}
+        <a href="{{ tag.get_absolute_url }}" class="tag">{{ tag|tag_count }}<span class="tag-count">{{ tag.post_set.count }}</span></a> {% endfor %}
         <hr>
         <a href="{% url 'tags:list' %}"><i class="fa fa-tags" aria-hidden="true"></i> All tags</a>
     </div>
