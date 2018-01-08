@@ -3,24 +3,5 @@
  | Home
 {% endblock %}
 {% block content %}
-{% if user.is_authenticated %}
-<h1>Hello, {{ user.first_name }}</h1>
-{% endif %}
-http://www.pwc.com/vn/hackaday2017
-
-Reverse engineering (Reserve software, unpack…)
-Web (Analyse and exploit vulnerabilities on web services and program logic: SQL injection, XSS, Seasion Hijacking...).
-Pwnable (Exploit software).
-MISC (Forensic, ACM, Recon,…)
-
-{% for task in task_list %}
-<div class="form-group ">
-    <div class="col-md-5">
-        <div class="checkbox">
-            <input type="checkbox" name="packersOff" value="1"/>
-             <label class="strikethrough">{{ task }}</label>
-        </div>
-     </div>
-</div>
-{% endfor  %}
+Home
 {% endblock %}
