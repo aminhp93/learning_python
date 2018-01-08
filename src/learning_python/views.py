@@ -19,7 +19,7 @@ from posts.models import Post
 class Home(View):
 	def get(self, request, *args, **kwargs):
 		template = "home.html"
-		context = {'count_space': range(6)}
+		context = {'count_space': range(7)}
 		return render(request, template, context)
 
 class Contact(View):

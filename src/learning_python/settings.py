@@ -164,14 +164,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-#sendgrid settings
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'yourusername@youremail.com'
-# EMAIL_HOST_PASSWORD = 'your password'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-
-
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -193,48 +185,6 @@ REST_FRAMEWORK = {
 }
 
 
-OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Aceess to your groups'}
-}
-
-JWT_AUTH = {
-    'JWT_ENCODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_encode_handler',
-
-    'JWT_DECODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_decode_handler',
-
-    'JWT_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_payload_handler',
-
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-
-    'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_response_payload_handler',
-
-    'JWT_SECRET_KEY': "123",
-    'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_PUBLIC_KEY': None,
-    'JWT_PRIVATE_KEY': None,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_VERIFY': True,
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
-    'JWT_AUDIENCE': None,
-    'JWT_ISSUER': None,
-
-    'JWT_ALLOW_REFRESH': False,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    'JWT_AUTH_COOKIE': None,
-}
-
-
-# FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
-
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.sane_lists',
     'markdown.extensions.nl2br',
@@ -249,18 +199,17 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# LOGIN_URL = 'login'
-# LOGOUT_URL = 'logout'
+
 LOGIN_REDIRECT_URL = 'home'
 
-SOCIAL_AUTH_GITHUB_KEY = 'ef588a412819e0bb5101'
-SOCIAL_AUTH_GITHUB_SECRET = 'd55cbd86143bda71502a76877b3aae89a9dfafe1'
+SOCIAL_AUTH_GITHUB_KEY = '49aa0f62b6e4331d0681'
+SOCIAL_AUTH_GITHUB_SECRET = '9945f15b35e729909038948ea542d0f2ae81c492'
 
 SOCIAL_AUTH_TWITTER_KEY = 'dX9VC75etjgCYdgZPxXypCHdN'
 SOCIAL_AUTH_TWITTER_SECRET = 'S6KQKUhC3g3tcsbrpFxDYVevxCF2AfhPy5ZHwBhMGmOPL2bue8'
 
-SOCIAL_AUTH_FACEBOOK_KEY = '451821651x33143'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '524fada3c3ca5adgb279da535da1d863'  # App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = '1582699971777486'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'f1a4cc90f08196068e24f6104d58225e'  # App Secret
 
 
 HAYSTACK_CONNECTIONS = {

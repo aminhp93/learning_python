@@ -50,7 +50,6 @@ class PostListView(ListView):
 		except EmptyPage:
 			# If page is out of range (e.g. 9999), deliver last page of results.
 			context['post_list'] = paginator.page(paginator.num_pages)
-		print(dir(context['post_list']))
 		
 		user_list = User.objects.all()
 		context['user_list'] = user_list
